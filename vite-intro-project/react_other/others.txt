@@ -1,19 +1,10 @@
-npx create-react-app react-intro-project --use-npm
-cd react-intro-project
-# установка реакт 18
-npm install react@18 react-dom@18 --legacy-peer-deps
-
 npm list react react-dom  # проверка версии реакта
-
-npm audit fix
-
 rm -rf node_modules package-lock.json  # удаляем все пакеты и зависимости
-npm install web-vitals
-npm install
+
 
 																		vite
-npm create vite@last
-cd vite-intro-project
+npm create vite@latest my-app --template react  # создание реакт приложения через вит
+cd project
 npm install
 npm run dev
 
