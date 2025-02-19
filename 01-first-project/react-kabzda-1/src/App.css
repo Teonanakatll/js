@@ -1,42 +1,54 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.app-wrapper {
+  display: grid;
+  width: 100%;
+  /* max-width: 1200px; */
+  height: 100vh;
+  grid-template-areas: 
+    "h h"
+    "n c";
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 2fr 10fr;
+  gap: 10px; /* вместо grid-gap */
+  
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.head {
+  grid-area: h;
+  background-color: yellowgreen;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.head img {
+  height: 55px;
+  border-radius: 8px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.navig {
+  height: n;
+  background-color: palegreen;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.navig a {
+  color: #363838;
+  font-size: 25px;
+}
+.navig div {
+  margin: 5px 0;
 }
 
-.card {
-  padding: 2em;
+.content {
+  height: c;
+  background-color: yellow;
 }
 
-.read-the-docs {
-  color: #888;
+.content img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.gitem {
+  /* color: #F88500; */
+  border: 3px solid #F88500;
+  border-radius: 8px;
 }
