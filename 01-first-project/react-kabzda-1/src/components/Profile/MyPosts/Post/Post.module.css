@@ -1,0 +1,14 @@
+
+.item {
+	color: #000;
+	margin-left: 7px;
+	color: saddlebrown;
+}
+.item img {
+	border-radius: 18px;
+	width: 100px;
+	height: 80px;
+	object-fit: cover;
+	border: 3px solid #F88500;
+	
+}

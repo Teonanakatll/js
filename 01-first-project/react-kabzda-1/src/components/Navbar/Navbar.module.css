@@ -1,0 +1,32 @@
+.nav {
+  height: n;
+  /* background-color: yellowgreen; */
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding-left: 20px;
+  padding-top: 10px;
+}
+
+.nav div {
+  margin: 5px 0;
+}
+
+.item {
+	color: saddlebrown;
+  transition: color .3s ease-out;
+}
+
+.item a {
+  color: inherit;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.item:hover {
+  color: gold;
+}
+
+.item a.active {
+  color: gold;
+}
