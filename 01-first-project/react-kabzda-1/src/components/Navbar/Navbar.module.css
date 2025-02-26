@@ -1,26 +1,25 @@
+.navBarSection {
+  color: saddlebrown;
+  transition: color .3s ease-out;
+  font-size: 23px;
+  padding: 25px 22px 0;
+}
 .nav {
   height: n;
   /* background-color: yellowgreen; */
   display: flex;
   flex-direction: column;
   align-items: start;
-  padding-left: 20px;
-  padding-top: 10px;
-}
-
-.nav div {
-  margin: 5px 0;
+  margin-bottom: 20px;
 }
 
 .item {
-	color: saddlebrown;
+	margin-bottom: 10px;
   transition: color .3s ease-out;
-}
-
-.item a {
-  color: inherit;
-  font-size: 23px;
-  font-weight: bold;
+  a {
+    color: inherit;
+    font-weight: bold;
+  }
 }
 
 .item:hover {
@@ -29,4 +28,10 @@
 
 .item a.active {
   color: gold;
+}
+
+.onlineWrap {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
 }

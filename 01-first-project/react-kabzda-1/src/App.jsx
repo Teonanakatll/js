@@ -10,16 +10,22 @@ import Settings from "./components/Settings/Settings";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
 
-const App = () => {
+const App = (props) => {
+
+  const onlineList = props.state.dialogsPage.dialogs.filter(dialog => dialog.online)
+
   return (
     <BrowserRouter>
       <div className="app-wrapper">
         <Header />
-        <Navbar />
+        <Navbar onlineList={onlineList} />
         <div className={`app-wrapper-content gitem`}>
           <Routes>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/dialogs/*" element={<Dialogs />} />
+            {/* копирует содержимое profilePage, тоесть копирует ссылку на содержание его обьекта и в 
+            обьекте который принимает этот пропс при обращении к state будет доступ к его полям.
+            РОУТИНГ НИОТЧЕГО НЕ ЗАВИСИТ ЕГО ЗАДАЧА СЛЕДИТЬ ЗА АДРЕСНОЙ СТРОКОЙ!! */}
+            <Route path="/profile" element={<Profile profilePage={props.state.profilePage} addPost={props.addPost} updateNewPostText={props.updateNewPostText} />} />
+            <Route path="/dialogs/*" element={<Dialogs state={props.state.dialogsPage} addMessage={props.addMessage} updateNewMessage={props.updateNewMessage} />} />
             <Route path="/news" element={<News />} />
             <Route path="/music" element={<Music />} />
             <Route path="/settings" element={<Settings />} />
