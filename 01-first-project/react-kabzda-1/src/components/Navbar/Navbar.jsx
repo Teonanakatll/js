@@ -10,19 +10,19 @@ const Navbar = (porps) => {
 					{/* isActive — это параметр, который передается в функцию className компонентом NavLink из библиотеки React Router. Он автоматически 
 					добавляется в функцию, которая определяет, является ли текущий путь активным (т.е. соответствует ли он маршруту, на который ведет NavLink).
 					s.navItem - просто показывает что через интерполяцию можно добавить несколько классов */}
-					<NavLink className={({isActive}) => isActive ? `${s.active} ${s.navItem}` : s.navItem} to="/profile">Profile</NavLink>
+					<NavLink to="/profile" className={({isActive}) => isActive ? `${s.active} ${s.navItem}` : s.navItem}>Profile</NavLink>
 				</div>
 				<div className={s.item}>
-					<NavLink className={({isActive}) => isActive ? `${s.active} ${s.navItem}` : s.navItem} to="/dialogs">Messages</NavLink>
+					<NavLink to="/dialogs" className={({isActive}) => isActive ? `${s.active} ${s.navItem}` : s.navItem}>Messages</NavLink>
 				</div>
 				<div className={s.item}>
-					<NavLink className={({isActive}) => isActive ? `${s.active} ${s.navItem}` : s.navItem} to="/news">News</NavLink>
+					<NavLink to="/news" className={({isActive}) => isActive ? `${s.active} ${s.navItem}` : s.navItem}>News</NavLink>
 				</div>
 				<div className={s.item}>
-					<NavLink className={({isActive}) => isActive ? `${s.active} ${s.navItem}` : s.navItem} to="/music">Music</NavLink>
+					<NavLink to="/music" className={({isActive}) => isActive ? `${s.active} ${s.navItem}` : s.navItem}>Music</NavLink>
 				</div>
 				<div className={s.item}>
-					<NavLink className={({isActive}) => isActive ? `${s.active} ${s.navItem}` : s.navItem} to="/settings">Settings</NavLink>
+					<NavLink to="/settings" className={({isActive}) => isActive ? `${s.active} ${s.navItem}` : s.navItem}>Settings</NavLink>
 				</div>
 
 			</nav>

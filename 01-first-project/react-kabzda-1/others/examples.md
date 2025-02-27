@@ -71,3 +71,11 @@ const newArray = oldArray.map(phrase => ({eng: phrase, ru: translateRu(phrase)})
 > Callback функция — это функция, которая передается в другую функцию как аргумент и вызывается
 >	в определенный момент, например, по завершении какой-либо операции или события.
 <button onClick={ addPost } >Add post</button>
+
+***                                     flux, solid, observer, publisher - какие ещё паттеры есть?**
+
+> S. Принцип единственной ответственности(Single responsibility)
+> O. Принцип открытости/закрытости (Open-closed)
+> L. Принцип подстановки Барбары Лисков (Liskov substitution)
+> I. Принцип разделения интерфейса (Interface segregation)
+> D. Принцип инверсии зависимостей (Dependency Invertion)

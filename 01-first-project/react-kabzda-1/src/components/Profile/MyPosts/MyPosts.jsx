@@ -2,20 +2,21 @@ import { useRef } from "react";
 import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
 
-const MyPosts = (props) => {
+import { addPostActionCreator, updateNewPostTextActionCreator } from "../../../redux/state";
 
-  const postsElements = props.posts.map(el => <Post message={el.message} likesCount={el.likesCount} />)
+
+const MyPosts = (props) => {
+  const postsElements = props.state.posts.map(el => <Post message={el.message} likesCount={el.likesCount} />)
 
   const newPostElement = useRef(null)
   
   const addPos  = () => {
-    props.addPost()
-    
+    props.dispatch(addPostActionCreator())
   }
 
   const onPostChange = () => {
     let text = newPostElement.current.value
-    props.updateNewPostText(text)
+    props.dispatch(updateNewPostTextActionCreator(text))
   }
 
   return (
@@ -23,9 +24,9 @@ const MyPosts = (props) => {
       <h3>My posts</h3>
       <div>
         <div>
-          <p>{props.newPostText}</p>
+          <p>{props.state.newPostText}</p>
           {/* тут тот принцып useRef - хранение данных между рендерами, что по нашей лгике как раз и вызывает рендер при изменении текущего значения */}
-          <textarea onChange={ onPostChange } ref={newPostElement} value={props.newPostText} />
+          <textarea onChange={ onPostChange } ref={newPostElement} value={props.state.newPostText} />
         </div>
         <div>
           {/* Callback функция — это функция, которая передается в другую функцию как аргумент и вызывается

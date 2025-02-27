@@ -4,6 +4,7 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import TextArea from "../TextArea/TextArea";
 import { useRef } from "react";
+import { addMessageActionCreator, updateNewMessageTextActionCreator } from "../../redux/state";
 
 const Dialogs = (props) => {
     const newMessageElement = useRef(null)
@@ -17,12 +18,15 @@ const Dialogs = (props) => {
   ));
 
   const addMessage = () => {
-    props.addMessage()
+    props.dispatch(addMessageActionCreator())
   }
 
-  const onMessageChange = () => {
-    let text = newMessageElement.current.value
-    props.updateNewMessage(text)
+  // textarea - при событии onChange передаёт в функцию событие, через которае мы можем у обьекта вызвавшего его
+  // взять значение
+  const onMessageChange = (e) => {
+    
+    let body = e.target.value
+    props.dispatch(updateNewMessageTextActionCreator(body))
   }
 
   return (
@@ -37,7 +41,8 @@ const Dialogs = (props) => {
         {/* <TextArea onClick={onClick} /> */}
         <div>
         <div>
-          <textarea onChange={onMessageChange} ref={newMessageElement} value={props.state.newMessageText} ></textarea>
+          <p>{props.state.newMessageText}</p>
+          <textarea onChange={onMessageChange} value={props.state.newMessageText} ></textarea>
         </div>
         <div>
           {/* Callback функция — это функция, которая передается в другую функцию как аргумент и вызывается
