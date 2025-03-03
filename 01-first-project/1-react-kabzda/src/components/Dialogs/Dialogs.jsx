@@ -2,12 +2,11 @@
 import s from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import TextArea from "../TextArea/TextArea";
-import { useRef } from "react";
-import { addMessageActionCreator, updateNewMessageTextActionCreator } from "../../redux/state";
+
+import { addMessage, updateNewMessageText } from "../../redux/dialogs-reducer";
+import { useDispatch, useSelector } from "react-redux";
 
 const Dialogs = (props) => {
-    const newMessageElement = useRef(null)
 
   let dialogsElements = props.state.dialogs.map((dialog) => (
     <DialogItem id={dialog.id} name={dialog.name} ava={dialog.ava} online={dialog.online} />
@@ -17,23 +16,25 @@ const Dialogs = (props) => {
     <Message my={el.my} message={el.message} id={el.id} />
   ));
 
-  const addMessage = () => {
-    props.dispatch(addMessageActionCreator())
+  let newMessageText = props.state.newMessageText
+
+  const addMess = () => {
+    // dispatch(addMessage())
+    props.addMessage()
   }
 
   // textarea - при событии onChange передаёт в функцию событие, через которае мы можем у обьекта вызвавшего его
   // взять значение
-  const onMessageChange = (e) => {
-    
+  const MessageChange = (e) => {
     let body = e.target.value
-    props.dispatch(updateNewMessageTextActionCreator(body))
+    // dispatch(updateNewMessageText(body))
+    props.onMessageChange(body)
   }
 
   return (
     <div className={s.dialogs}>
       <div className={s.dialogsItems}>{dialogsElements}</div>
       <div className={s.messagesItems}>
-
         {messagesElements}
       </div>
       <div></div>
@@ -41,13 +42,13 @@ const Dialogs = (props) => {
         {/* <TextArea onClick={onClick} /> */}
         <div>
         <div>
-          <p>{props.state.newMessageText}</p>
-          <textarea onChange={onMessageChange} value={props.state.newMessageText} ></textarea>
+          <p>{newMessageText}</p>
+          <textarea onChange={MessageChange} value={newMessageText} ></textarea>
         </div>
         <div>
           {/* Callback функция — это функция, которая передается в другую функцию как аргумент и вызывается
            в определенный момент, например, по завершении какой-либо операции или события. */}
-          <button onClick={ addMessage } >Add post</button>
+          <button onClick={ addMess } >Add post</button>
         </div>
       </div>
       </div>

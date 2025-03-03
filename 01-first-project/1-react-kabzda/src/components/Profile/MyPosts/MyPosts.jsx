@@ -2,21 +2,24 @@ import { useRef } from "react";
 import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
 
-import { addPostActionCreator, updateNewPostTextActionCreator } from "../../../redux/state";
-
 
 const MyPosts = (props) => {
-  const postsElements = props.state.posts.map(el => <Post message={el.message} likesCount={el.likesCount} />)
+  //  чтобы каждая переменная (one, two, three) отслеживалась независимо,
+  //  используй отдельные useSelector для каждой части состояния.
+  //  Это улучшит производительность, так как компонент будет перерисовываться только при изменении той части состояния, которая действительно используется
 
+  const postsElements = props.state.posts.map(el => <Post message={el.message} likesCount={el.likesCount} />)
+  const newPostText = props.state.newPostText
   const newPostElement = useRef(null)
   
-  const addPos  = () => {
-    props.dispatch(addPostActionCreator())
+
+  const onAddPost  = () => {
+    props.addPost()
   }
 
-  const onPostChange = () => {
+  const PostChange = () => {
     let text = newPostElement.current.value
-    props.dispatch(updateNewPostTextActionCreator(text))
+    props.updateNewPostText(text)
   }
 
   return (
@@ -24,14 +27,14 @@ const MyPosts = (props) => {
       <h3>My posts</h3>
       <div>
         <div>
-          <p>{props.state.newPostText}</p>
+          <p>{newPostText}</p>
           {/* тут тот принцып useRef - хранение данных между рендерами, что по нашей лгике как раз и вызывает рендер при изменении текущего значения */}
-          <textarea onChange={ onPostChange } ref={newPostElement} value={props.state.newPostText} />
+          <textarea onChange={ PostChange } ref={newPostElement} value={newPostText} />
         </div>
         <div>
           {/* Callback функция — это функция, которая передается в другую функцию как аргумент и вызывается
            в определенный момент, например, по завершении какой-либо операции или события. */}
-          <button onClick={ addPos } >Add post</button>
+          <button onClick={ onAddPost } >Add post</button>
         </div>
       </div>
       <div className={`${s.posts}`}>

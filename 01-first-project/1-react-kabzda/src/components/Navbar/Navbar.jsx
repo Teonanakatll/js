@@ -2,7 +2,11 @@ import s from './Navbar.module.css'
 import { NavLink } from 'react-router-dom'
 import OnlineList from './OnlineList/OnlineList'
 
-const Navbar = (porps) => {
+
+
+const Navbar = () => {
+
+
 	return (
 		<div className={`${s.navBarSection} gitem`}>
 			<nav className={`${s.nav}`}>
@@ -27,7 +31,7 @@ const Navbar = (porps) => {
 
 			</nav>
 			{/* элементы в OnlineList имеют отличие в стилях поэтому передаём пропс с флагом */}
-			<OnlineList onlineList={porps.onlineList} onlineSection={true} />
+			<OnlineList />
 
 		</div>
 	)

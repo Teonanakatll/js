@@ -1,7 +1,7 @@
-const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
-const ADD_MESSAGE = 'ADD-MESSAGE'
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT'
+import dialogsReducer from "./dialogs-reducer"
+import profileReduser from "./profile-reducer"
+import sidebarReducer from "./sidebar-reducer"
+
 
 const store = {
   _state: {
@@ -32,6 +32,7 @@ const store = {
       ],
       newMessageText: ''
     },
+    sideBar: []
   },
   _callSubscriber: () => {
     alert('У меня нет субскрайбера')
@@ -39,11 +40,22 @@ const store = {
   getState() {
     return this._state
   },
+  getOnlineList() {
+    return this._state.dialogsPage.dialogs.filter(dialog => dialog.online)
+  },
   subscribe(observer) {
     this._callSubscriber = observer
   },
 
   dispatch(action) {
+    this._state.profilePage = profileReduser(this._state.profilePage, action)
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+
+    // возможно будет ошибка если экшен не подходит потому что reducer устанавливает значение sideBar по переданным
+    // в него данным dialogsPage
+    this._state.sideBar = sidebarReducer(this._state.dialogsPage.dialogs, action)
+
+    this._callSubscriber(this)
 
     if (action.type === ADD_POST) {
 
@@ -76,19 +88,15 @@ const store = {
 
       this._state.dialogsPage.newMessageText = action.body
       this._callSubscriber(this)
+
+    } else if (action.type === GET_ONLINE_USERS) {
+
+      this._state.sideBar = this._state.dialogsPage.dialogs.filter(dialog => dialog.online)
+      return this._state.sideBar
     }
   }
 }
 
-export const addPostActionCreator = () => ({type: ADD_POST})
-
-export const updateNewPostTextActionCreator = (text) => 
-  ({type: UPDATE_NEW_POST_TEXT, newText: text})
-
-export const addMessageActionCreator = () => ({type: ADD_MESSAGE})
-
-export const updateNewMessageTextActionCreator = (body) => 
-  ({type: UPDATE_NEW_MESSAGE_TEXT, body: body})
 
 export default store
 window.newState = store

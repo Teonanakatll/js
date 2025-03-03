@@ -1,14 +1,13 @@
-import MyPosts from './MyPosts/MyPosts';
+import MyPostsContainer from './MyPosts/myPostsContainer';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 
-const Profile = (props) => {
+const Profile = () => {
   // debugger
   return (
     <div>
       <ProfileInfo />
-      <MyPosts state={props.state}
-       dispatch={props.dispatch} />
+      <MyPostsContainer />
     </div>
   );
 };

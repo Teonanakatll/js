@@ -79,3 +79,42 @@ const newArray = oldArray.map(phrase => ({eng: phrase, ru: translateRu(phrase)})
 > L. Принцип подстановки Барбары Лисков (Liskov substitution)
 > I. Принцип разделения интерфейса (Interface segregation)
 > D. Принцип инверсии зависимостей (Dependency Invertion)
+
+***                                     reducer(state, action)**
+![текст изображения](../../../screens/Screenshot_3.png)
+
+
+***                                     npm install @reduxjs/toolkit**
+
+> Redux Toolkit (RTK) — это библиотека, которая упрощает работу с Redux. Она включает:
+> createSlice для создания редьюсеров и действий.
+> configureStore для настройки хранилища.
+> Встроенную поддержку Immer для работы с иммутабельными данными.
+> Встроенную поддержку redux-thunk для асинхронных действий.
+> И многое другое.
+
+
+***                                     поверхностное и глубокое копирование**
+
+> ...spred поверхностное копипование, копирует первый уровень вложености
+```js
+a = {
+	name: 'it-kamasutra.com',
+	protocol: 'https',
+	maxStudentsCount: 10,
+	isOnline: true,
+	students: ['ivan', 'andrey', 'farid'],
+	classroom: {
+		teatcher: {
+			name: 'wew',
+			age: 18
+		}
+	}
+}
+b = {...a}
+
+b.classroom.teatcher.name = 'Dmitry'
+a.students === b.students
+
+```
+![текст изображения](../../../screens/Screenshot_4.png)

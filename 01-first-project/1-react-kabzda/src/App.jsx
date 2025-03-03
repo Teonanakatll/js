@@ -1,7 +1,7 @@
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -10,22 +10,24 @@ import Settings from "./components/Settings/Settings";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
 
+
+
 const App = (props) => {
   // debugger
-  const onlineList = props.state.dialogsPage.dialogs.filter(dialog => dialog.online)
+  // const onlineList = props.state.dialogsPage.dialogs.filter(dialog => dialog.online)
 
   return (
-    <BrowserRouter>
+     <BrowserRouter >
       <div className="app-wrapper">
         <Header />
-        <Navbar onlineList={onlineList} />
+        <Navbar onlineList={props.onlineList} />
         <div className={`app-wrapper-content gitem`}>
           <Routes>
             {/* копирует содержимое profilePage, тоесть копирует ссылку на содержание его обьекта и в 
             обьекте который принимает этот пропс при обращении к state будет доступ к его полям.
             РОУТИНГ НИОТЧЕГО НЕ ЗАВИСИТ ЕГО ЗАДАЧА СЛЕДИТЬ ЗА АДРЕСНОЙ СТРОКОЙ!! */}
-            <Route path="/profile" element={<Profile state={props.state.profilePage} dispatch={props.dispatch} />} />
-            <Route path="/dialogs/*" element={<Dialogs state={props.state.dialogsPage} dispatch={props.dispatch} />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/dialogs/*" element={<DialogsContainer />} />
             <Route path="/news" element={<News />} />
             <Route path="/music" element={<Music />} />
             <Route path="/settings" element={<Settings />} />
