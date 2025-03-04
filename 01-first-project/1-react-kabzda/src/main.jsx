@@ -8,10 +8,7 @@ import App from './App.jsx'
 import { Provider } from 'react-redux'
 
 
-const root = createRoot(document.getElementById('root'));
-                              
-const rerenderEntireTree = () => {
-  root.render(
+createRoot(document.getElementById('root')).render(
     <StrictMode>
       {/* <MyContext.Provider value={user}></MyContext.Provider> */}
       {/* специальный компонент редакса для стора, автоматически оптимизирует перерисаовку компанентов */}
@@ -20,9 +17,7 @@ const rerenderEntireTree = () => {
       </Provider>
     </StrictMode>
   )  
-}
 
-rerenderEntireTree(store)
 
 store.subscribe(() => {
   // rerenderEntireTree(store)

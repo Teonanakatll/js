@@ -14,7 +14,7 @@ const navBarSlice = createSlice({
 	}
 })
 
-export const {getOnlineUsers} = navBarSlice.actions
+export const { getOnlineUsers } = navBarSlice.actions
 export default navBarSlice.reducer
 
 const GET_ONLINE_USERS = 'GET-ONLINE-USERS'

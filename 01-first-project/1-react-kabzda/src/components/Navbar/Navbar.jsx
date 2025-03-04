@@ -28,6 +28,9 @@ const Navbar = () => {
 				<div className={s.item}>
 					<NavLink to="/settings" className={({isActive}) => isActive ? `${s.active} ${s.navItem}` : s.navItem}>Settings</NavLink>
 				</div>
+				<div className={s.item}>
+					<NavLink to="/users" className={({isActive}) => isActive ? `${s.active} ${s.navItem}` : s.navItem}>Users</NavLink>
+				</div>
 
 			</nav>
 			{/* элементы в OnlineList имеют отличие в стилях поэтому передаём пропс с флагом */}

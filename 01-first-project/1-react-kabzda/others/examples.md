@@ -4,26 +4,45 @@
 * sdfsdf [http://sdfsdf.com]
 ![текст изображения](url)
 
-_                                                 __map()__
+***                      возвращает новый обьект             map()**
 
 > map - это свойство массива которое всегда принимает стрелочную функцию (как и forEach/reduce)
 ```js
 const newArray = oldArray.map((el) => {
 	return isMaleName(el) ? 1 : 0;
 })
+
+users: [...users]
+users.map(u => u)
 ```
 
-***                                                      filter()**
+
+***                      возвращает новый обьект            filter()**
 ```jsx
 const onlineList = props.state.dialogsPage.dialogs.filter(dialog => dialog.online)
 const onlineList = props.state.dialogsPage.dialogs.filter(dialog => dialog.online === true)
 ```
 
-***                                                        push()**
+***                      возвращает первый обьект            filter()**
+> возвращает первый элемент, удовлетворяющий условию
+```js
+const user = state.users.find(user => user.id === action.payload);
+if (user) { user.followed = !user.followed }                    // revers
+```
+
+
+***                                        ...spred            push()**
+
 > добавляет в конец массива новый элемент
 ```jsx
 posts.push(newPost)
 ```
+> добавить элемент в массив можно через запятую указав после/до распакованного старого массива
+```js
+const messages: [ ...messages, {id: 5, message: 'example'} ]
+const messages: [ {id: 5, message: 'example'}, ...messages ]
+```
+
 
 
 > если стрелочная функция имеет условие в 1 строку то можно воспользоваться неявным возвратом
@@ -79,6 +98,7 @@ const newArray = oldArray.map(phrase => ({eng: phrase, ru: translateRu(phrase)})
 > L. Принцип подстановки Барбары Лисков (Liskov substitution)
 > I. Принцип разделения интерфейса (Interface segregation)
 > D. Принцип инверсии зависимостей (Dependency Invertion)
+>                                        DDD ИЗУЧИТЬ
 
 ***                                     reducer(state, action)**
 ![текст изображения](../../../screens/Screenshot_3.png)
@@ -118,3 +138,29 @@ a.students === b.students
 
 ```
 ![текст изображения](../../../screens/Screenshot_4.png)
+
+***                                               СОКРАЩЕНИЕ КОДА В return**
+
+```js
+const newMessage = {
+	id: state.messages.length + 1,
+	my: true,
+	message: state.newMessageText
+}
+
+const stateCopy = {
+	...state,
+	// второй элемент перезаписывает одноимённый обьект из первого распакованного обьекта
+	messages: [...state.messages]}
+stateCopy.messages.push(newMessage)
+stateCopy.newMessageText = ''
+return stateCopy
+```
+>                             заменяется этим выражением
+```js
+return {
+	...state,
+	messages: [...state.messages, newMessage],
+	newMessageText: ''
+}
+```

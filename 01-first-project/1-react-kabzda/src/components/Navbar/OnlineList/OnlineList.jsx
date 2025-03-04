@@ -14,7 +14,7 @@ const OnlineList = () => {
 		dispatch(getOnlineUsers(dialogs))
 	}, [dispatch])
 	
-	const list = onlineList.map(el => <DialogItem id={el.id} name={el.name} ava={el.ava} online={el.online} onlineSection={true} />)
+	const list = onlineList.map(el => <DialogItem id={el.id} name={el.name} ava={el.ava} online={el.online} onlineSection={true} key={el.id} />)
 
 	return (
 		<div className={s.onlineBox}>

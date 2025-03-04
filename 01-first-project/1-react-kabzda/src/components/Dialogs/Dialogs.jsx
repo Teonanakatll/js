@@ -9,11 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 const Dialogs = (props) => {
 
   let dialogsElements = props.state.dialogs.map((dialog) => (
-    <DialogItem id={dialog.id} name={dialog.name} ava={dialog.ava} online={dialog.online} />
+    <DialogItem id={dialog.id} name={dialog.name} ava={dialog.ava} online={dialog.online} key={dialog.id} />
   ));
 
   let messagesElements = props.state.messages.map((el) => (
-    <Message my={el.my} message={el.message} id={el.id} />
+    <Message my={el.my} message={el.message} id={el.id} key={el.id} />
   ));
 
   let newMessageText = props.state.newMessageText

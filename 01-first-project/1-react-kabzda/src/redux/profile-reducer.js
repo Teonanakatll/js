@@ -5,36 +5,42 @@ const profileSlice = createSlice({
 	name: 'profilePage',
 	initialState: {
       posts: [
-        { di: 1, message: "Hi, how are you?", likesCount: 11 },
-        { di: 1, message: "It's my first post", likesCount: 12 },
-        { di: 1, message: "What is it man?", likesCount: 5 },
-        { di: 1, message: "I'm ready up and runing!", likesCount: 100 },
+        { id: 1, message: "Hi, how are you?", likesCount: 11 },
+        { id: 2, message: "It's my first post", likesCount: 12 },
+        { id: 3, message: "What is it man?", likesCount: 5 },
+        { id: 4, message: "I'm ready up and runing!", likesCount: 100 },
       ],
       newPostText: 'it-kamasutra.com'
 		},                     
 	reducers: {
 		addPost: (state) => {
+			
 			const newPost = {
-				id: state.posts.length + 1,  // Автоматически генерируем ID
-				message: state.newPostText,
-				likesCount: 5,
-			};
-			// debugger
-			let stateCopy = {...state}
-			stateCopy.posts = [...state.posts]
-			stateCopy.posts.push(newPost)
-			stateCopy.newPostText = ''
-			return stateCopy
+					id: state.posts.length + 1,  // Автоматически генерируем ID
+					message: state.newPostText,
+					likesCount: 5,
+				};
+			return {...state,
+				posts: [...state.posts, newPost],
+				newPostText: ''
+			}
+
+
+			// let stateCopy = {...state}
+			// stateCopy.posts = [...state.posts]
+			// stateCopy.posts.push(newPost)
+			// stateCopy.newPostText = ''
+			// return stateCopy
 
 			// state.posts.push(newPost);  // Иммутабельность "из коробки" благодаря Immer
 			// state.newPostText = '';
 		},
 		updateNewPostText: (state, action) => {
+			return { ...state, newPostText: action.payload }
 
-			const stateCopy = {...state}
-			stateCopy.newPostText = {...state.newPostText}
-			stateCopy.newPostText = action.payload
-			return stateCopy
+			// const stateCopy = {...state}
+			// stateCopy.newPostText = action.payload
+			// return stateCopy
 
 			// Параметр payload — это данные, которые передаются в action. В Redux Toolkit каждый action автоматически
 			//  получает свойство payload, если вы передаёте аргумент в action creator.

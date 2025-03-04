@@ -8,7 +8,7 @@ const MyPosts = (props) => {
   //  используй отдельные useSelector для каждой части состояния.
   //  Это улучшит производительность, так как компонент будет перерисовываться только при изменении той части состояния, которая действительно используется
 
-  const postsElements = props.state.posts.map(el => <Post message={el.message} likesCount={el.likesCount} />)
+  const postsElements = props.state.posts.map(el => <Post key={el.id} message={el.message} likesCount={el.likesCount} />)
   const newPostText = props.state.newPostText
   const newPostElement = useRef(null)
   
