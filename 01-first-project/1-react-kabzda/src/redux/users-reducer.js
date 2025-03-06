@@ -4,9 +4,10 @@ const usersSlice = createSlice({
 	// name: 'usersPage' означает, что все action types будут иметь префикс usersPage/ , addPost будет иметь тип profile/addPost
 	name: 'usersPage',
 	initialState: {
-		users: [
-
-		]
+		users: [],
+		pageSize: 50,
+		totalUsersCount: 0,
+		currentPage: 1
 	},
 	//                                        ФУНКЦИЯ ТОГГЛ
 	reducers: {
@@ -17,23 +18,9 @@ const usersSlice = createSlice({
 			if (user) {
 				user.followed = !user.followed
 			}
-
-			// return {
-			// 	...state,
-			// 	users: state.users.map(u => {
-			// 		if (u.id === action.payload) {
-			// 			console.log("Follow value:", u.followed)
-			// 			return {...u, followed: true}
-			// 		}
-			// 		return u
-			// 	})
-			// }
-			
 		},
 		setUsers: (state, action) => {
-			// state.users = action.payload
-
-			return { ...state, users: [...state.users, ...action.payload] }
+			state.users = action.payload
 		},
 		unFollow: (state, action) => {
 			// console.log("UnFollow action payload:", action.payload)
@@ -41,20 +28,15 @@ const usersSlice = createSlice({
 			if (user) {
 				user.followed = !user.followed
 			}
-
-			// return {
-			// 	...state,
-			// 	users: state.users.map(u => {
-			// 		if (u.id === action.payload) {
-			// 			return {...u, followed: false}
-			// 		}
-			// 		return u
-			// 	})
-			// }
-
-		}
+		},
+		setCurrentPage: (state, action) => {
+			state.currentPage = action.payload
+		},
+		setTotalUsersCount: (state, action) => {
+			state.totalUsersCount = action.payload
+		},
 	}
 })
 
-export const { follow, unFollow, setUsers } = usersSlice.actions
+export const { follow, unFollow, setUsers, setCurrentPage, setTotalUsersCount } = usersSlice.actions
 export default usersSlice.reducer
