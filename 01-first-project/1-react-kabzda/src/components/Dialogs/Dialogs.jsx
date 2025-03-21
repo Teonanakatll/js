@@ -6,6 +6,7 @@ import Message from "./Message/Message";
 import React from "react";
 
 class Dialogs extends React.Component {
+  
 
   addMess = () => {
     // dispatch(addMessage())

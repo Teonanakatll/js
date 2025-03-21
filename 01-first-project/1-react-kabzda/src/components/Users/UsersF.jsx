@@ -1,10 +1,11 @@
 import s from "./Users.module.css"
 import DialogItem from "../Dialogs/DialogItem/DialogItem"
-import { useEffect, useCallback } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import orig from "../../assets/img/orig.webp"
-import axios from 'axios';
-import { follow, unFollow, setUsers, setCurrentPage, setTotalUsersCount } from "../../redux/users-reducer";
+import Preloader from "../common/Preloader/Preloader"
+import { setCurrentPage } from "../../redux/users-reducer";
+import { getUsers, follow , unFollow } from "../../redux/users-reducer"
 
 
 const Users = (props) => {
@@ -18,79 +19,108 @@ const Users = (props) => {
 	// 		{id: 5, online: true, followed: false, fullName: "Maksim", status: "Люблю лыжи", location: {city: "Ростов-на-Дону", country: "Russia"}, photo: "https://avatars.mds.yandex.net/get-shedevrum/14784426/img_348f4048f12811efa4f986c50544bce9/orig"}])
 	// 	}
 	// }
+
+	const path = "profile"
+
 	const users = useSelector((state) => state.usersPage.users);
 	const pageSize = useSelector((state) => state.usersPage.pageSize);
 	const totalUsersCount = useSelector((state) => state.usersPage.totalUsersCount);
 	const currentPage = useSelector((state) => state.usersPage.currentPage);
+	const isFetching = useSelector((state) => state.usersPage.isFetching);
+	const followingInProgress = useSelector((state) => state.usersPage.followingInProgress)
 
 	const dispatch = useDispatch()
 
-	const handleFollow = (userId) => dispatch(follow(userId))
-	const handleUnfollow = (userId) => dispatch(unFollow(userId))
-
-	const handleSetUsers = useCallback((users) => {
-		dispatch(setUsers(users))
-	}, [dispatch])
-
-	const handleTotalUsersCount = useCallback((totalUsers) => {
-		dispatch(setTotalUsersCount(totalUsers))
-	}, [dispatch])
+	// const handleSetUsers = useCallback((users) => {
+	// 	dispatch(setUsers(users))
+	// }, [dispatch])
 
 	// в момент клика передаётся номер запрашиваемой страницы, его и передаём в параметр page=${pageNumber}
 	const onPageChange = (pageNumber) => {
 		dispatch(setCurrentPage(pageNumber))
-		axios.get(`https://social-network.samuraijs.com/api/1.0/users/?page=${pageNumber}&count=${pageSize}`)
-		.then(response => {handleSetUsers(response.data.items)})
 	}
 
 	useEffect(() => {
-		// номер страницы при рендере берём из значения стейта page=${currentPage}
-		axios.get(`https://social-network.samuraijs.com/api/1.0/users/?page=${currentPage}&count=${pageSize}`)
-		.then(response => {
-			handleSetUsers(response.data.items)
-			handleTotalUsersCount(response.data.totalCount)
-		})
-	}, [handleSetUsers, currentPage])
+		// handleToggleIsFetching(true)
+		// // номер страницы при рендере берём из значения стейта page=${currentPage}
+		// usersAPI.getUsers(currentPage, pageSize).then(data => {
+		// 	handleToggleIsFetching(false)
+		// 	handleSetUsers(data.items)
+		// 	handleTotalUsersCount(data.totalCount)
+		// })
+		dispatch(getUsers(currentPage, pageSize))
+	}, [currentPage])
 	
 	const pagesCount = Math.ceil(totalUsersCount / pageSize)
 	const pages = []
-	for (let i=1; i <= pagesCount; i++) {
-		if (pages.length < 10) {
+	for (let i=1; i <= pagesCount && pages.length < 10; i++) {
 			pages.push(i)
-		}
-		
+
 	}
+	// for (let i=pagesCount; i > 1 && pages.length < 10; i--) {
+	// 		pages.push(i)
+	// }
 
 	return (
-		<div>
-			<div className={s.pagWrap}>
-				{pages.map(p => <div key={p} className={currentPage === p ? `${s.selectedPage} ${s.pagButton}` : s.pagButton}
-				onClick={() => onPageChange(p)}>{p}</div>)}
+		<>
+			{ isFetching ? <Preloader /> : null}
+
+			<div>
+				{pagesCount
+				}
+				<div className={s.pagWrap}>
+					{pages.map(p => <div key={p} className={currentPage === p ? `${s.selectedPage} ${s.pagButton}` : s.pagButton}
+					onClick={() => onPageChange(p)}>{p}</div>)}
+				</div>
+				
+				{users.map(u => <div key={u.id}>       
+					<span>
+						<div className={s.avaWrap}>
+							{/* {u.id} */}
+							<DialogItem id={u.id} name={u.fullName} online={u.online} path={path} ava={u.photos.small ? u.photos.small : orig} />
+						</div>
+						<div>
+							
+							{u.followed 
+								? <button disabled={followingInProgress.some(id => id === u.id)} onClick={() => {
+									// handleToggleFollowingProgress({userId: u.id, isFetching: true})
+									// usersAPI.unFollow(u.id)
+									// .then(response => {
+									// 	if (response.resultCode === 0) {
+									// 		handleFollow(u.id)
+									// 	}
+									// 	handleToggleFollowingProgress({userId: u.id, isFetching: false})
+									// })
+									dispatch(unFollow(u.id))
+								
+								}}>Unfollow</button> 
+
+								: <button disabled={followingInProgress.some(id => id === u.id)} onClick={() => {
+									// handleToggleFollowingProgress({userId: u.id, isFetching: true})
+									// usersAPI.follow(u.id)
+									// .then(response => {
+									// 	if (response.resultCode === 0) {
+									// 		handleUnfollow(u.id)
+									// 	}
+									// 	handleToggleFollowingProgress({userId: u.id, isFetching: false})
+									// })
+									dispatch(follow(u.id))
+									
+								}}>Follow</button>}
+							
+						</div>
+					</span>
+					<span>
+						<span>
+							<div>{u.name}</div>
+							<div>{u.status}</div>
+						</span>
+						<span>
+						</span>
+					</span>
+				</div>)}
 			</div>
-			
-			{users.map(u => <div key={u.id}>       
-				<span>
-					<div className={s.avaWrap}>
-						<DialogItem id={u.id} name={u.fullName} online={u.online} ava={u.photos.small ? u.photos.small : orig} />
-					</div>
-					<div>
-						
-						{u.followed 
-							? <button onClick={() => handleFollow(u.id)}>Unfollow</button> 
-							: <button onClick={() => handleUnfollow(u.id)}>Follow</button>}
-						
-					</div>
-				</span>
-				<span>
-					<span>
-						<div>{u.name}</div>
-						<div>{u.status}</div>
-					</span>
-					<span>
-					</span>
-				</span>
-			</div>)}
-		</div>
+		</>
 	)
 }
 export default Users

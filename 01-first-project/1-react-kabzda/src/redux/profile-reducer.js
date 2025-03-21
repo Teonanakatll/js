@@ -1,16 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit"
+import kaban	from "../assets/img/kaban.jpg"
+import { usersAPI } from "../api/api";
 
 const profileSlice = createSlice({
 	// name: 'profile' означает, что все action types будут иметь префикс profilePage/ , addPost будет иметь тип profile/addPost
 	name: 'profilePage',
 	initialState: {
-      posts: [
-        { id: 1, message: "Hi, how are you?", likesCount: 11 },
-        { id: 2, message: "It's my first post", likesCount: 12 },
-        { id: 3, message: "What is it man?", likesCount: 5 },
-        { id: 4, message: "I'm ready up and runing!", likesCount: 100 },
-      ],
-      newPostText: 'it-kamasutra.com'
+      // profile: {},
+			isFetching: false,
+      newPostText: 'it-kamasutra.com',
+			posts: [
+				{id: 1, message: "Всё ок", likesCount: 8, img: kaban},
+				{id: 2, message: "Учу реакт", likesCount: 5, img: kaban},
+				{id: 3, message: "Что тут происходит", likesCount: 3, img: kaban},
+				{id: 4, message: "Кто здесь?", likesCount: 100, img: kaban},
+				{id: 5, message: "Опять накосячил?...", likesCount: 50, img: kaban},
+			]
 		},                     
 	reducers: {
 		addPost: (state) => {
@@ -19,37 +24,33 @@ const profileSlice = createSlice({
 					id: state.posts.length + 1,  // Автоматически генерируем ID
 					message: state.newPostText,
 					likesCount: 5,
+					img: kaban
 				};
-			return {...state,
-				posts: [...state.posts, newPost],
-				newPostText: ''
-			}
-
-
-			// let stateCopy = {...state}
-			// stateCopy.posts = [...state.posts]
-			// stateCopy.posts.push(newPost)
-			// stateCopy.newPostText = ''
-			// return stateCopy
-
-			// state.posts.push(newPost);  // Иммутабельность "из коробки" благодаря Immer
-			// state.newPostText = '';
+			state.posts.push(newPost);  // Иммутабельность "из коробки" благодаря Immer
+			state.newPostText = '';
 		},
 		updateNewPostText: (state, action) => {
-			return { ...state, newPostText: action.payload }
-
-			// const stateCopy = {...state}
-			// stateCopy.newPostText = action.payload
-			// return stateCopy
-
 			// Параметр payload — это данные, которые передаются в action. В Redux Toolkit каждый action автоматически
 			//  получает свойство payload, если вы передаёте аргумент в action creator.
-			// state.newPostText = action.payload   // payload содержит данные
+			state.newPostText = action.payload   // payload содержит данные
+		},
+		setUserProfile: (state, action) => {
+			state.profile = action.payload
+		},
+		toggleIsFetching: (state, action) => {
+			state.isFetching = action.payload
 		}
 	}
 })
 
-export const {addPost, updateNewPostText} = profileSlice.actions
+export const setProfile = (userId) => async (dispatch) => {
+	// debugger
+	const profile = await usersAPI.getProfile(userId)
+		dispatch(setUserProfile(profile))
+	}
+
+
+export const {addPost, updateNewPostText, setUserProfile, toggleIsFetching} = profileSlice.actions
 export default profileSlice.reducer
 
 

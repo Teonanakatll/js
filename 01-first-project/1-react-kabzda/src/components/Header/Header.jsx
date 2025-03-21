@@ -1,13 +1,31 @@
+import { NavLink } from 'react-router-dom';
 import s from './Header.module.css'
+import { authMe } from '../../redux/auth-reducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 const Header = () => {
+  
+  const isAuth = useSelector((state) => state.auth.data.isAuth)
+  const login = useSelector((state) => state.auth.data.login)
+  // debugger
+  const dispatch = useDispatch()
+
+  // free@samuraijs.com free
+  useEffect(() => {
+    dispatch(authMe())
+  }, [])
+
   return (
     <header className={`${s.head} gitem`}>
       <div className={s.img_wrapp}>
-      {/* <img
-        src=""
+      <img
+        src='https://georgiaaddictiontreatmentcenter.com/wp-content/uploads/2024/11/DALL%C2%B7E-2024-11-13-02.49.10-An-abstract-colorful-depiction-of-the-brain-with-vibrant-swirling-patterns-symbolizing-altered-perception-and-consciousness.-The-brain-should-have-a.webp'
         alt="alt"
-      /> */}
+      />
+      </div>
+      <div className={s.loginBlock}>
+        {isAuth ? login : <NavLink to={'/login'}>Login</NavLink>}
       </div>
 
     </header>

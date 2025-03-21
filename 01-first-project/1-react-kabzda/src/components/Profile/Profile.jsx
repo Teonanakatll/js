@@ -1,4 +1,4 @@
-import MyPostsContainer from './MyPosts/myPostsContainer';
+import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 
@@ -7,7 +7,7 @@ const Profile = () => {
   return (
     <div>
       <ProfileInfo />
-      <MyPostsContainer />
+      <MyPosts />
     </div>
   );
 };

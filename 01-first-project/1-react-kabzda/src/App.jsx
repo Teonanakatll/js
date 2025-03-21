@@ -20,19 +20,20 @@ const App = (props) => {
   return (
      <BrowserRouter >
       <div className="app-wrapper">
-        <Header />
-        <Navbar onlineList={props.onlineList} />
-        <div className={`app-wrapper-content gitem`}>
+          <Header />
+          <Navbar onlineList={props.onlineList} />
+          <div className={`app-wrapper-content gitem`}>
           <Routes>
             {/* копирует содержимое profilePage, тоесть копирует ссылку на содержание его обьекта и в 
             обьекте который принимает этот пропс при обращении к state будет доступ к его полям.
             РОУТИНГ НИОТЧЕГО НЕ ЗАВИСИТ ЕГО ЗАДАЧА СЛЕДИТЬ ЗА АДРЕСНОЙ СТРОКОЙ!! */}
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:userId?" element={<Profile />} />
             <Route path="/dialogs/*" element={<Dialogs />} />
             <Route path="/news" element={<News />} />
             <Route path="/music" element={<Music />} />
             <Route path="/users" element={<Users />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/login" element={<Settings />} />
           </Routes>
         </div>
 

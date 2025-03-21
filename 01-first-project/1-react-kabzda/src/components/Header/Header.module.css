@@ -1,9 +1,12 @@
 .head {
   grid-area: h;
   /* background-color: yellowgreen; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .img_wrapp {
-  background: url('https://georgiaaddictiontreatmentcenter.com/wp-content/uploads/2024/11/DALL%C2%B7E-2024-11-13-02.49.10-An-abstract-colorful-depiction-of-the-brain-with-vibrant-swirling-patterns-symbolizing-altered-perception-and-consciousness.-The-brain-should-have-a.webp') no-repeat center center / cover;
+  background: url() no-repeat center center / cover;
   position: relative;
   height: 45px;
   width: 45px;
@@ -34,4 +37,7 @@
   display: block;
   z-index: 1;
   border: 1px solid #000;
+}
+.loginBlock {
+  margin-right: 10px;
 }

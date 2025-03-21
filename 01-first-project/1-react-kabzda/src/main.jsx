@@ -20,6 +20,5 @@ createRoot(document.getElementById('root')).render(
 
 
 store.subscribe(() => {
-  // rerenderEntireTree(store)
   console.log('Состояние изменилось!')
 })

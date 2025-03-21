@@ -1,0 +1,17 @@
+/* .preloaderWrap {
+	width: 100%;
+} */
+.preloaderImg {
+	border-radius: 20em;
+	margin-left: 50%;
+	margin-top: 50px;
+	position: absolute;
+	z-index: 5;
+	transform: translateX(-100%);
+}
+.bg {
+	width: 100%;
+	height: 120vh;
+	background-color: #000;
+	border-radius: 8px;
+}

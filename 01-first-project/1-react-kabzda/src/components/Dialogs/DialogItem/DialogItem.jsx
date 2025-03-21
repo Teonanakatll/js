@@ -4,11 +4,11 @@ import s from "../Dialogs.module.css";
 const DialogItem = ({id, name, online, ava, ...props}) => {
   // debugger
   
-  let path = `/dialogs/${id}`;
+  let toPath = `/${props.path}/${id}`;
   return (
     <div className={props.onlineSection ? `${s.dialog} ${s.onlineSection}` : s.dialog}>
       
-      <NavLink className={({isActive}) => isActive ? s.active : s.link} to={path}>
+      <NavLink className={({isActive}) => isActive ? s.active : s.link} to={toPath}>
         {name}
         <img className={s.ava} src={ava} alt="" />
       </NavLink>
