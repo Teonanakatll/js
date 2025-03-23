@@ -6,16 +6,20 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import Users from "./components/Users/UsersF";
+import Login from "./components/Login/Login";
 
 // npm react-router-dom
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter, Outlet } from "react-router-dom";
+import IsAuthUser from "./hooks/IsAuthUser";
 import "./App.css";
 
-
+const ProtectedLayout = () => (
+  <IsAuthUser>
+    <Outlet />   {/* Рендерим вложенные маршруты */}
+  </IsAuthUser>
+)
 
 const App = (props) => {
-  // debugger
-  // const onlineList = props.state.dialogsPage.dialogs.filter(dialog => dialog.online)
 
   return (
      <BrowserRouter >
@@ -27,13 +31,18 @@ const App = (props) => {
             {/* копирует содержимое profilePage, тоесть копирует ссылку на содержание его обьекта и в 
             обьекте который принимает этот пропс при обращении к state будет доступ к его полям.
             РОУТИНГ НИОТЧЕГО НЕ ЗАВИСИТ ЕГО ЗАДАЧА СЛЕДИТЬ ЗА АДРЕСНОЙ СТРОКОЙ!! */}
-            <Route path="/profile/:userId?" element={<Profile />} />
-            <Route path="/dialogs/*" element={<Dialogs />} />
+            <Route element={<ProtectedLayout />}>
+
+              <Route path="/profile/:userId?" element={<Profile />} />
+              <Route path="/dialogs/*" element={<Dialogs />} />
+              
+            </Route>
+
             <Route path="/news" element={<News />} />
             <Route path="/music" element={<Music />} />
             <Route path="/users" element={<Users />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/login" element={<Settings />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </div>
 

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import kaban	from "../assets/img/kaban.jpg"
-import { usersAPI } from "../api/api";
+import { profileAPI, usersAPI } from "../api/api";
+import { useSelector } from "react-redux";
 
 const profileSlice = createSlice({
 	// name: 'profile' означает, что все action types будут иметь префикс profilePage/ , addPost будет иметь тип profile/addPost
@@ -15,7 +16,9 @@ const profileSlice = createSlice({
 				{id: 3, message: "Что тут происходит", likesCount: 3, img: kaban},
 				{id: 4, message: "Кто здесь?", likesCount: 100, img: kaban},
 				{id: 5, message: "Опять накосячил?...", likesCount: 50, img: kaban},
-			]
+			],
+			profile: null,
+			status: ""
 		},                     
 	reducers: {
 		addPost: (state) => {
@@ -37,20 +40,37 @@ const profileSlice = createSlice({
 		setUserProfile: (state, action) => {
 			state.profile = action.payload
 		},
+		setStatus: (state, action) => {
+			// debugger
+			state.status = action.payload
+		},
 		toggleIsFetching: (state, action) => {
 			state.isFetching = action.payload
 		}
 	}
 })
 
-export const setProfile = (userId) => async (dispatch) => {
+export const getProfile = (userId) => async (dispatch) => {
 	// debugger
 	const profile = await usersAPI.getProfile(userId)
 		dispatch(setUserProfile(profile))
+
 	}
 
+export const getStatus = (userId) => async (dispatch) => {
+	const status = await profileAPI.getStatus(userId)
+	dispatch(setStatus(status))
+}
 
-export const {addPost, updateNewPostText, setUserProfile, toggleIsFetching} = profileSlice.actions
+export const updateStatus = (status) => async (dispatch) => {
+	const response = await profileAPI.updateStatus(status)
+	if (response.resultCode === 0) {
+		dispatch(setStatus(status))
+	}
+	
+}
+
+export const {addPost, updateNewPostText, setUserProfile, setStatus, toggleIsFetching} = profileSlice.actions
 export default profileSlice.reducer
 
 

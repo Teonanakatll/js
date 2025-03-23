@@ -1,14 +1,12 @@
 import s from "./ProfileInfo.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useCallback, useEffect } from "react";
-import { setProfile, setUserProfile } from "../../../redux/profile-reducer";
-// import { setUserProfile } from "../../../redux/profile-reducer";
+import { useEffect } from "react";
+import { getProfile, getStatus } from "../../../redux/profile-reducer";
 import Preloader from "../../common/Preloader/Preloader";
-import axios from "axios";
+import ProfileStatus from "./ProfileStatus";
 
 import { useNavigate, useLocation, useMatch, useSearchParams } from 'react-router-dom';
-import { usersAPI } from "../../../api/api";
 
 const ProfileInfo = () => {
 
@@ -19,32 +17,31 @@ const ProfileInfo = () => {
 
   // Это хук из библиотеки React Router DOM, который позволяет извлекать параметры из URL
   let { userId } = useParams()
-  // debugger
   const profile = useSelector((state) => state.profilePage.profile)
 
+  // console.log('status', status);
+  
+  
   const dispatch = useDispatch()
-
-  const handleSetUserProfile = useCallback((user) => {
-    dispatch(setUserProfile(user))
-  }, [dispatch])
   
+  useEffect(() => {
+    console.log("userId", userId);
+    dispatch(getProfile(userId))
+    dispatch(getStatus(userId))
+    console.log("userId", userId);
+    
+    // dispatch(getStatus(userId))
+  }, [userId])
   
-    useEffect(() => {
-      dispatch(setProfile(userId))
-      // usersAPI.getProfile(userId)
-      // .then(profile => {
-      //   handleSetUserProfile(profile)
-      // })
-    }, [userId])
-
+  // debugger
   return (
     !profile ? <Preloader /> :
     <div>
-      <img
+      {/* <img
         className={s.imgHeader}
         src={"https://cdn.tripster.ru/thumbs2/2a9a60e0-fcdb-11ed-bb0b-a25e06629b62.1220x600.jpeg"}
         alt=""
-      />
+      /> */}
       <div className={s.profile} >
         <img className={s.imgProfile} src={profile.photos.large} alt="" />
         <div className={s.profileWrap}>
@@ -77,7 +74,7 @@ const ProfileInfo = () => {
           
         </div>
       </div>
-      
+      <ProfileStatus />
     </div>
   );
 };

@@ -381,3 +381,44 @@ function Parent() {
 > Это полезно, если функция передается в дочерний компонент или используется как зависимость в других хуках 🔗.
 > Однако не стоит злоупотреблять им, если улучшение производительности незначительно, и твой код и так работает эффективно 🔥.
 > Вот так! Теперь useCallback станет твоим союзником в борьбе с лишними рендерами! 🦸‍♂️💪
+
+
+***                                               useSelector()**
+
+
+> useSelector — это хук из библиотеки React-Redux, который позволяет получать данные из Redux store в функциональных компонентах. Он заменяет mapStateToProps, который использовался в классовых компонентах.
+> 
+> Как использовать useSelector?
+> Хук принимает функцию-селектор, которая получает весь state из Redux и возвращает нужные данные.
+
+> Если селектор возвращает объект или массив, React может посчитать, что он изменился даже при тех же данных.
+> Для оптимизации можно использовать shallowEqual:
+```js
+import { useSelector, shallowEqual } from "react-redux";
+
+const user = useSelector((state) => state.user, shallowEqual);
+```
+
+> Если приходится часто пересчитывать данные, лучше использовать reselect:
+```js
+import { createSelector } from "reselect";
+
+const userSelector = (state) => state.user;
+const userNameSelector = createSelector(userSelector, (user) => user.name);
+```
+
+
+***                                               useDispatch()**
+
+
+> useDispatch — хук для отправки экшенов в Redux
+> useDispatch — это хук из React-Redux, который используется для отправки экшенов в Redux store. Он заменяет mapDispatchToProps, который раньше использовался в классовых компонентах.
+> 
+> Не пересоздавай обработчики на каждом рендере
+> Лучше оборачивать dispatch в useCallback, если передаёшь его в дочерние компоненты:
+
+```js
+const handleClick = useCallback(() => {
+  dispatch(updateName("Сява"));
+}, [dispatch]);
+```

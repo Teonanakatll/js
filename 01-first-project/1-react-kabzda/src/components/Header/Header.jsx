@@ -3,11 +3,12 @@ import s from './Header.module.css'
 import { authMe } from '../../redux/auth-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { logOut } from '../../redux/auth-reducer';
 
 const Header = () => {
   
-  const isAuth = useSelector((state) => state.auth.data.isAuth)
-  const login = useSelector((state) => state.auth.data.login)
+  const isAuth = useSelector((state) => state.auth.isAuth)
+  const login = useSelector((state) => state.auth.login)
   // debugger
   const dispatch = useDispatch()
 
@@ -15,6 +16,10 @@ const Header = () => {
   useEffect(() => {
     dispatch(authMe())
   }, [])
+
+  const hendlerLogOut = () => {
+    dispatch(logOut())
+  }
 
   return (
     <header className={`${s.head} gitem`}>
@@ -25,7 +30,12 @@ const Header = () => {
       />
       </div>
       <div className={s.loginBlock}>
-        {isAuth ? login : <NavLink to={'/login'}>Login</NavLink>}
+        {isAuth ? (
+          <div className={s.loginInner}>
+            {login}
+            <div onDoubleClick={ hendlerLogOut } className={s.logOut}>Logout</div>
+          </div>
+          ) : <NavLink to={'/login'}>Login</NavLink>}
       </div>
 
     </header>

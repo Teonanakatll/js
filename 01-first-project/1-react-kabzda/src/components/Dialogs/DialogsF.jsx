@@ -3,6 +3,7 @@ import s from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
+
 import { addMessage, updateNewMessageText } from "../../redux/dialogs-reducer";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -35,6 +36,7 @@ const Dialogs = () => {
   ));
 
   return (
+
     <>
     <h4>DialogsF</h4>
     <div className={s.dialogs}>
@@ -59,6 +61,7 @@ const Dialogs = () => {
       </div>
     </div>
     </>
+
   );
 };
 export default Dialogs;

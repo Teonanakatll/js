@@ -41,3 +41,17 @@
 .loginBlock {
   margin-right: 10px;
 }
+.loginInner {
+  display: flex;
+  align-items: center;
+}
+.logOut {
+  margin-left: 20px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  transition: color .3s ease-out;
+}
+.logOut:hover {
+  color: red;
+}
