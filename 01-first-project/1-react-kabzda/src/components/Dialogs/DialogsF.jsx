@@ -1,34 +1,63 @@
-
 import s from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
-
-import { addMessage, updateNewMessageText } from "../../redux/dialogs-reducer";
+import { addMessage } from "../../redux/dialogs-reducer";
 import { useDispatch, useSelector } from "react-redux";
+import { useCallback } from "react";
+import { Textarea } from "../common/FormControl/FormControl";
+
+//   const dispatch = useDispatch();
+//   const formik = useFormik({
+//     initialValues: {
+//       message: "",
+//     },
+//     onSubmit: (values) => {
+//       dispatch(addMessage(values.message));
+//       formik.resetForm();
+//     },
+//   });
+
+//   return (
+//     <form onSubmit={ formik.handleSubmit }>
+//       <div>
+//         <p>{ formik.values.message }</p>
+//         <textarea
+//           name="message"
+//           type="text"
+//           placeholder="Введите текст сообщения"
+//           onChange={ formik.handleChange }
+//           value={ formik.values.message }
+//         ></textarea>
+//       </div>
+//       <div>
+//         <button type="submit">Add post</button>
+//       </div>
+//     </form>
+//   );
+// };
 
 const Dialogs = () => {
   // префикс для урла
-  const path = "dialogs"
+  const path = "dialogs";
 
-  const dialogs = useSelector((store) => store.dialogsPage.dialogs)
-  const messages = useSelector((store) => store.dialogsPage.messages)
-  const newMessageText = useSelector((store) => store.dialogsPage.newMessageText)
-  const dispatch = useDispatch()
+  const dialogs = useSelector((store) => store.dialogsPage.dialogs);
+  const messages = useSelector((store) => store.dialogsPage.messages);
 
-  const handleAddMessage = () => {
-    dispatch(addMessage())
-  }
-
-  // textarea - при событии onChange передаёт в функцию событие, через которае мы можем у обьекта вызвавшего его
-  // взять значение
-  const handleMessageChange = (e) => {
-    const body = e.target.value
-    dispatch(updateNewMessageText(body))
-  }
+  const dispatch = useDispatch();
+  const handleAddMessage = useCallback((messageText) => {
+    dispatch(addMessage(messageText));
+  })
 
   let dialogsElements = dialogs.map((dialog) => (
-    <DialogItem id={dialog.id} name={dialog.name} ava={dialog.ava} online={dialog.online} path={path} key={dialog.id} />
+    <DialogItem
+      id={dialog.id}
+      name={dialog.name}
+      ava={dialog.ava}
+      online={dialog.online}
+      path={path}
+      key={dialog.id}
+    />
   ));
 
   let messagesElements = messages.map((el) => (
@@ -36,32 +65,19 @@ const Dialogs = () => {
   ));
 
   return (
-
     <>
-    <h4>DialogsF</h4>
-    <div className={s.dialogs}>
-      <div className={s.dialogsItems}>{dialogsElements}</div>
-      <div className={s.messagesItems}>
-        {messagesElements}
-      </div>
-      <div></div>
-      <div className={s.text_area}>
-        {/* <TextArea onClick={onClick} /> */}
-        <div>
-        <div>
-          <p>{newMessageText}</p>
-          <textarea onChange={(e) => handleMessageChange(e)} value={newMessageText} ></textarea>
-        </div>
-        <div>
-          {/* Callback функция — это функция, которая передается в другую функцию как аргумент и вызывается
-           в определенный момент, например, по завершении какой-либо операции или события. */}
-          <button onClick={ handleAddMessage } >Add post</button>
-        </div>
-      </div>
-      </div>
-    </div>
-    </>
+      <h4>DialogsF</h4>
+      <div className={s.dialogs}>
+        <div className={s.dialogsItems}>{dialogsElements}</div>
+        <div className={s.messagesItems}>{messagesElements}
 
+        <div className={s.text_area}>
+          <Textarea handleSubmit={ handleAddMessage } />
+        </div>
+        </div>
+        <div></div>
+      </div>
+    </>
   );
 };
 export default Dialogs;

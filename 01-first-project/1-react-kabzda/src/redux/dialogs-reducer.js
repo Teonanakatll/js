@@ -29,25 +29,18 @@ const dialogsSlice = createSlice({
 			{ id: 7, online: true, name: "Viktor" , ava: "https://avatars.mds.yandex.net/get-shedevrum/14784426/img_348f4048f12811efa4f986c50544bce9/orig"},
 			{ id: 8, online: false, name: "Valera" , ava: "https://avatars.mds.yandex.net/get-shedevrum/15252934/img_a1b0d02eec6411ef95d2561e34a05e01/orig"},
 		],
-		newMessageText: 'ывафываыфа'
 	},                     // 42,        13m
 	reducers: {
-		addMessage: (state) => {
+		addMessage: (state, action) => {
 			const newMessage = {
 				id: state.messages.length + 1,
 				my: true,
-				message: state.newMessageText
+				message: action.payload
 			}
 
 			state.messages.push(newMessage)
 			state.newMessageText = ''
 		},
-		updateNewMessageText: (state, action) => {
-
-			// Параметр payload — это данные, которые передаются в action. В Redux Toolkit каждый action автоматически
-			//  получает свойство payload, если вы передаёте аргумент в action creator.
-			state.newMessageText = action.payload;  // payload содержит данные
-		}
 	}
 })
 

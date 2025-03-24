@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import kaban	from "../assets/img/kaban.jpg"
 import { profileAPI, usersAPI } from "../api/api";
-import { useSelector } from "react-redux";
 
 const profileSlice = createSlice({
 	// name: 'profile' означает, что все action types будут иметь префикс profilePage/ , addPost будет иметь тип profile/addPost
@@ -9,7 +8,6 @@ const profileSlice = createSlice({
 	initialState: {
       // profile: {},
 			isFetching: false,
-      newPostText: 'it-kamasutra.com',
 			posts: [
 				{id: 1, message: "Всё ок", likesCount: 8, img: kaban},
 				{id: 2, message: "Учу реакт", likesCount: 5, img: kaban},
@@ -21,21 +19,16 @@ const profileSlice = createSlice({
 			status: ""
 		},                     
 	reducers: {
-		addPost: (state) => {
+		addPost: (state, action) => {
 			
 			const newPost = {
 					id: state.posts.length + 1,  // Автоматически генерируем ID
-					message: state.newPostText,
+					message: action.payload,  // payload содержит данные
 					likesCount: 5,
 					img: kaban
 				};
 			state.posts.push(newPost);  // Иммутабельность "из коробки" благодаря Immer
 			state.newPostText = '';
-		},
-		updateNewPostText: (state, action) => {
-			// Параметр payload — это данные, которые передаются в action. В Redux Toolkit каждый action автоматически
-			//  получает свойство payload, если вы передаёте аргумент в action creator.
-			state.newPostText = action.payload   // payload содержит данные
 		},
 		setUserProfile: (state, action) => {
 			state.profile = action.payload

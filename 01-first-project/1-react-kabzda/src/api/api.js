@@ -46,7 +46,7 @@ export const profileAPI = {
 }
 
 export const loginAPI = {
-	login: async (email, password, rememberMe) => {
+	login: async (email, password, rememberMe = false) => {
 		const response = await instanse.post(`auth/login`, {
 			email: email,
 			password: password,

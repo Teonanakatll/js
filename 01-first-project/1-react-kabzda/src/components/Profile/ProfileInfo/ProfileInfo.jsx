@@ -25,12 +25,8 @@ const ProfileInfo = () => {
   const dispatch = useDispatch()
   
   useEffect(() => {
-    console.log("userId", userId);
     dispatch(getProfile(userId))
     dispatch(getStatus(userId))
-    console.log("userId", userId);
-    
-    // dispatch(getStatus(userId))
   }, [userId])
   
   // debugger

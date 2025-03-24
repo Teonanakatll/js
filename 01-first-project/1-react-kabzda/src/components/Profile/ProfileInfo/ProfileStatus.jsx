@@ -35,7 +35,6 @@ const ProfileStatus = () => {
 					<span onDoubleClick={ activateEditMode } >{status ? status : "Пока нет статуса..."}  {status}</span>
 				</div>
 			}
-			{console.log('render')}
 			{editMode &&
 				<div>
 					<input onChange={ onStatusChange } onBlur={ deActivateEditMode } autoFocus={true} value={statusLocal}></input>

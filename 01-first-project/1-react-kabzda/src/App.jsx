@@ -15,6 +15,7 @@ import "./App.css";
 
 const ProtectedLayout = () => (
   <IsAuthUser>
+
     <Outlet />   {/* Рендерим вложенные маршруты */}
   </IsAuthUser>
 )

@@ -30,6 +30,7 @@
 	height: d;
 	background-color: #b5da9e;
 	width: 100%;
+	display: inline-block;
 	height: 100%;
 }
 

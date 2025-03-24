@@ -17,6 +17,6 @@ let store = configureStore({
 	}
 })
 
-// window.stor = store;
+window.stor = store;
 
 export default store

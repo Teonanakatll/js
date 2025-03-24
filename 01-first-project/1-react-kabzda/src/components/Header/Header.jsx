@@ -4,18 +4,19 @@ import { authMe } from '../../redux/auth-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { logOut } from '../../redux/auth-reducer';
+import { initializeApp } from '../../redux/auth-reducer';
 
 const Header = () => {
   
-  const isAuth = useSelector((state) => state.auth.isAuth)
-  const login = useSelector((state) => state.auth.login)
+  const { isAuth, login } = useSelector((state) => state.auth)
+
   // debugger
   const dispatch = useDispatch()
 
-  // free@samuraijs.com free
+  // Проверяем авторизацию при загрузке
   useEffect(() => {
-    dispatch(authMe())
-  }, [])
+    dispatch(initializeApp());
+  }, [dispatch]);
 
   const hendlerLogOut = () => {
     dispatch(logOut())
@@ -32,6 +33,7 @@ const Header = () => {
       <div className={s.loginBlock}>
         {isAuth ? (
           <div className={s.loginInner}>
+            {/* {console.log('login', localStorage.getItem("authToken"))} */}
             {login}
             <div onDoubleClick={ hendlerLogOut } className={s.logOut}>Logout</div>
           </div>
