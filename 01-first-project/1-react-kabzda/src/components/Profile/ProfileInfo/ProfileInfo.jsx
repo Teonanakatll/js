@@ -17,6 +17,9 @@ const ProfileInfo = () => {
 
   // Это хук из библиотеки React Router DOM, который позволяет извлекать параметры из URL
   let { userId } = useParams()
+  const authorizedUserId = useSelector((state) => state.auth.id)
+
+  if (!userId) {userId = authorizedUserId}
   const profile = useSelector((state) => state.profilePage.profile)
 
   // console.log('status', status);
@@ -25,9 +28,15 @@ const ProfileInfo = () => {
   const dispatch = useDispatch()
   
   useEffect(() => {
+    // если нет id не в адресной строке не в сторе
+    if (!userId) {
+      // console.log('Profile: skip mount (no userId)');
+      return;
+    }
+
     dispatch(getProfile(userId))
     dispatch(getStatus(userId))
-  }, [userId])
+  }, [userId, dispatch])
   
   // debugger
   return (

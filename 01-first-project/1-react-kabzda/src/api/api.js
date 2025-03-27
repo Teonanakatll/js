@@ -14,7 +14,7 @@ export const usersAPI = {
 		const response = await instanse.get(`users/?page=${currentPage}&count=${pageSize}`)
 		return response.data
 	},
-	getProfile: async (userId = 32231) => {
+	getProfile: async (userId) => {
 		console.warn('Obsole method. Please use profileAPI object');
 		return profileAPI.getProfile(userId);
 		// const response = await instanse.get(`profile/${userId}`)
@@ -31,11 +31,11 @@ export const usersAPI = {
 }
 
 export const profileAPI = {
-	getProfile: async (userId = 32231) => {
+	getProfile: async (userId) => {
 		const response = await instanse.get(`profile/${userId}`);
 		return response.data;
 	},
-	getStatus: async (userId = 32231) => {
+	getStatus: async (userId) => {
 		const response = await instanse.get(`profile/status/${userId}`);
 		return response.data;
 	},
@@ -70,6 +70,7 @@ export const loginAPI = {
 export const authAPI = {
 	auth: async () => {
 		const response = await instanse.get(`auth/me`)
+		// console.log("response", response);
 		return response.data
 	},
 }

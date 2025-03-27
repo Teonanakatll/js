@@ -9,6 +9,8 @@ const authUserSlice = createSlice({
 		email: null,
 		login: null,
 		isAuth: localStorage.getItem("isAuth") === "true",
+		// isAuth: false,
+		error: null
 	},
 	reducers: {
 		setAuthUserData: (state, action) => {
@@ -23,6 +25,12 @@ const authUserSlice = createSlice({
 			state.login = null
 			state.isAuth = false
 		},
+		authError: (state, action) => {
+			state.error = action.payload
+		},
+		clearError: (state) => {
+			state.error = null
+		}
 	}
 })
 
@@ -35,31 +43,18 @@ export const authMe = () => async (dispatch) => {
 		}
 	}
 
-// проверка токена
-export const initializeApp = () => async (dispatch) => {
-  const token = localStorage.getItem("token"); // или из cookies
-  if (token) {
-    try {
-      const auth = await authAPI.auth(); // Проверяем токен
-      if (auth.resultCode === 0) {
-        dispatch(setAuthUserData(auth.data));
-      } else {
-        dispatch(noAuthUserData()); // Если токен невалидный
-      }
-    } catch (error) {
-      console.error("Auth check failed:", error);
-      dispatch(noAuthUserData());
-    }
-  }
-};
 
 export const login = (email, password, rememberMe) => async (dispatch) => {
 	const auth = await loginAPI.login(email, password, rememberMe)
 	// debugger
 	if (auth.resultCode === 0) {
 			dispatch(authMe())
+			dispatch(clearError())
 			localStorage.setItem("isAuth", "true")
 			localStorage.setItem("authToken", auth.data.token)
+		} else {
+			dispatch(authError(auth.messages[0]))
+			// console.log('auth.messages', auth.messages[0]);
 		}
 	}
 
@@ -73,5 +68,5 @@ export const logOut = () => async (dispatch) => {
 		}
 	}
 
-export const { setAuthUserData, noAuthUserData } = authUserSlice.actions
+export const { setAuthUserData, noAuthUserData, authError, clearError } = authUserSlice.actions
 export default authUserSlice.reducer

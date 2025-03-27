@@ -1,7 +1,8 @@
 import { login } from "../../redux/auth-reducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
 import { LoginForm } from "../common/FormControl/FormControl";
+import { Navigate } from "react-router-dom";
 
 // const LoginForm = () => {
 	
@@ -70,6 +71,8 @@ import { LoginForm } from "../common/FormControl/FormControl";
 
 const Login = () => {
 
+	const isAuth = useSelector((store) => store.auth.isAuth)
+
 	const dispatch = useDispatch();
 	const handleSubmit = useCallback((values) => {
 		dispatch(login(values.email, values.password, values.rememberMe))
@@ -78,7 +81,8 @@ const Login = () => {
   return (
     <div>
       <h1>Login</h1>
-      <LoginForm handleSubmit={ handleSubmit } />
+			{ isAuth ? <Navigate to="/profile" replace /> : <LoginForm handleSubmit={ handleSubmit } /> }
+      
     </div>
   );
 };

@@ -1,10 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import s from './Header.module.css'
-import { authMe } from '../../redux/auth-reducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
 import { logOut } from '../../redux/auth-reducer';
-import { initializeApp } from '../../redux/auth-reducer';
+
 
 const Header = () => {
   
@@ -12,11 +10,6 @@ const Header = () => {
 
   // debugger
   const dispatch = useDispatch()
-
-  // Проверяем авторизацию при загрузке
-  useEffect(() => {
-    dispatch(initializeApp());
-  }, [dispatch]);
 
   const hendlerLogOut = () => {
     dispatch(logOut())

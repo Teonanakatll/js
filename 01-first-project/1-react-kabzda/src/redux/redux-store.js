@@ -6,9 +6,11 @@ import profileReducer from './profile-reducer'
 import dialogsReducer from './dialogs-reducer'
 import navBarReducer from './sidebar-reducer'
 import usersReducer from './users-reducer'
+import appReducer from './app-reducer'
 
 let store = configureStore({
 	reducer: {
+		app: appReducer,
 		auth: authUserReducer,
 		profilePage: profileReducer,
 		dialogsPage: dialogsReducer,

@@ -12,18 +12,44 @@ import Login from "./components/Login/Login";
 import { Routes, Route, BrowserRouter, Outlet } from "react-router-dom";
 import IsAuthUser from "./hooks/IsAuthUser";
 import "./App.css";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { initializeApp, initializedSuccess } from "./redux/app-reducer";
+import Preloader from "./components/common/Preloader/Preloader";
 
 const ProtectedLayout = () => (
   <IsAuthUser>
-
     <Outlet />   {/* Рендерим вложенные маршруты */}
   </IsAuthUser>
 )
 
 const App = (props) => {
+  const dispatch = useDispatch();
+  const initialized = useSelector((state) => state.app.initialized)
+  const isAuth = useSelector((state) => state.auth.usAuth)
+
+  // Проверяем авторизацию при загрузке
+  useEffect(() => {
+    const initialize = async () => {
+      // .unwrap() — преобразует результат dispatch в Promise, чтобы можно было использовать await.
+      await dispatch(initializeApp()).unwrap();
+      dispatch(initializedSuccess())
+      // console.log('success', success)
+      
+    };
+    initialize()
+    
+  }, [dispatch]);
+
+  if (!initialized && !isAuth) {
+    // console.log('initialized', initialized)
+    return <Preloader></Preloader>
+  }
+    
+  
 
   return (
-     <BrowserRouter >
+    <BrowserRouter >
       <div className="app-wrapper">
           <Header />
           <Navbar onlineList={props.onlineList} />

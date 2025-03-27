@@ -1,9 +1,12 @@
 import { useFormik } from "formik";
+import { useSelector } from "react-redux";
 import s from "./FormControl.module.css";
 import * as Yup from "yup";
 
 
 export const LoginForm = (props) => {
+
+	const authError = useSelector((store) => store.auth.error)
 
 	const validationSchema = Yup.object({
 		email: Yup.string().email("Некорректный email").required("Обязательное поле"),
@@ -18,8 +21,7 @@ export const LoginForm = (props) => {
     },
 		validationSchema,
     onSubmit: (values) => {
-      console.log(values);
-			debugger
+
 			props.handleSubmit(values);
 			formik.resetForm();
     },
@@ -27,6 +29,7 @@ export const LoginForm = (props) => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
+			{authError && <div style={{color: 'red'}}>{authError}</div>}
       <div>
         <input
           name="email"

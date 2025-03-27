@@ -53,7 +53,7 @@ const usersSlice = createSlice({
 	}
 })
 
-export const getUsers = (currentPage, pageSize) => async (dispatch) => {
+export const requestUsers = (currentPage, pageSize) => async (dispatch) => {
 	dispatch(toggleIsFetching(true));
 	// номер страницы при рендере берём из значения стейта page=${currentPage}
 	const data = await usersAPI.getUsers(currentPage, pageSize)

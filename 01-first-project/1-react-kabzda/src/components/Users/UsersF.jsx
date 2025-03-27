@@ -4,8 +4,8 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import orig from "../../assets/img/orig.webp"
 import Preloader from "../common/Preloader/Preloader"
-import { setCurrentPage } from "../../redux/users-reducer";
-import { getUsers, follow , unFollow } from "../../redux/users-reducer"
+import { requestUsers, setCurrentPage, follow , unFollow } from "../../redux/users-reducer"
+import { getUsers, getPageSize, getCurrentPage, getTotalUsersCount, getIsFetching, getFollowingInProgress } from "../../redux/users-selectors"
 
 
 const Users = (props) => {
@@ -22,18 +22,15 @@ const Users = (props) => {
 
 	const path = "profile"
 
-	const users = useSelector((state) => state.usersPage.users);
-	const pageSize = useSelector((state) => state.usersPage.pageSize);
-	const totalUsersCount = useSelector((state) => state.usersPage.totalUsersCount);
-	const currentPage = useSelector((state) => state.usersPage.currentPage);
-	const isFetching = useSelector((state) => state.usersPage.isFetching);
-	const followingInProgress = useSelector((state) => state.usersPage.followingInProgress)
+	const users = useSelector(getUsers);
+	const pageSize = useSelector(getPageSize);
+	const totalUsersCount = useSelector(getTotalUsersCount);
+	const page = useSelector(getCurrentPage);
+	const isFetching = useSelector(getIsFetching);
+	const followingInProgress = useSelector(getFollowingInProgress)
 
 	const dispatch = useDispatch()
 
-	// const handleSetUsers = useCallback((users) => {
-	// 	dispatch(setUsers(users))
-	// }, [dispatch])
 
 	// в момент клика передаётся номер запрашиваемой страницы, его и передаём в параметр page=${pageNumber}
 	const onPageChange = (pageNumber) => {
@@ -41,15 +38,8 @@ const Users = (props) => {
 	}
 
 	useEffect(() => {
-		// handleToggleIsFetching(true)
-		// // номер страницы при рендере берём из значения стейта page=${currentPage}
-		// usersAPI.getUsers(currentPage, pageSize).then(data => {
-		// 	handleToggleIsFetching(false)
-		// 	handleSetUsers(data.items)
-		// 	handleTotalUsersCount(data.totalCount)
-		// })
-		dispatch(getUsers(currentPage, pageSize))
-	}, [currentPage])
+		dispatch(requestUsers(page, pageSize))
+	}, [page, dispatch])
 	
 	const pagesCount = Math.ceil(totalUsersCount / pageSize)
 	const pages = []
@@ -69,7 +59,7 @@ const Users = (props) => {
 				{pagesCount
 				}
 				<div className={s.pagWrap}>
-					{pages.map(p => <div key={p} className={currentPage === p ? `${s.selectedPage} ${s.pagButton}` : s.pagButton}
+					{pages.map(p => <div key={p} className={ page === p ? `${s.selectedPage} ${s.pagButton}` : s.pagButton}
 					onClick={() => onPageChange(p)}>{p}</div>)}
 				</div>
 				
